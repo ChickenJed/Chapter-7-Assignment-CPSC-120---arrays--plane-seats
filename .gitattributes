@@ -1,2 +1,348 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+// Christian Verry
+// 5-16-20
+// Assignment 7
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <algorithm>
+#include "input.h"
+using namespace std;
+
+const int MAX_SIZE = 100;
+
+void inputPartialArray(double list[], int size);
+void standardDeviation(const double list[], int size);
+void Programming_Project4();
+
+void Programming_Project5();
+
+void insertionSort(int a[], int n);
+void outputPartialArray(const int list[], int size);
+void Programming_Project6();
+
+void sort(string phrase);
+#define SIZE 26
+void spaceRemoval(string str);
+void Programming_Project8();
+
+void Programming_Project11();
+
+int main()
+{
+    do
+    {
+        system("cls");
+        cout << "\n\t\tCHAPTER 7 by Prof Q\n";
+        cout << "\t================================\n";
+        cout << "\t 0. Exit\n";
+        cout << "\t 4. Programming Project 4\n";
+        cout << "\t 5. Programming Project 5\n";
+        cout << "\t 6. Programming Project 6\n";
+        cout << "\t 8. Programming Project 8\n";
+        cout << "\t 11. Programming Project 11\n";
+        cout << "\t================================\n";
+        cout << "\t\toption: ";
+
+        char option[80];
+        cin >> option;
+        cin.clear();
+        cin.ignore(999, '\n');
+
+        int menu = atoi(option);
+        if (menu == 0)
+            menu = toupper(option[0]);
+
+        system("cls");
+        switch (menu)
+        {
+        case 4: Programming_Project4(); break;
+        case 5: Programming_Project5(); break;
+        case 6: Programming_Project6(); break;
+        case 8: Programming_Project8(); break;
+        case 11: Programming_Project11(); break;
+        default: exit(1);
+        }
+
+        cout << "\n";
+        system("pause");
+    } while (true);
+
+    return 0;
+}
+
+void Programming_Project11()
+{
+    const int ROW = 7, COLUMN = 5;
+    int index1, index2;
+    char arr[ROW][COLUMN];
+    char letter = 'A', num = '1', rowChoice, seatChoice, repeat;
+
+    for (index1 = 0; index1 < 7; index1++)
+    {
+        for (index2 = 1; index2 < 5; index2++)
+        {
+            arr[index1][index2] = letter;
+            letter++;
+        }
+        letter = 'A';
+    }
+
+    for (index1 = 0; index1 < 7; index1++)
+    {
+        arr[index1][0] = num;
+        num++;
+    }
+
+    for (index1 = 0; index1 < 7; index1++)
+    {
+        for (index2 = 0; index2 < 5; index2++)
+        {
+            cout << arr[index1][index2] << " ";
+        }
+        cout << "\n";
+    }
+    cout << "\n";
+
+    do
+    {
+
+        char rowChoice = inputChar("Please choose a row : ");
+        char seatChoice = inputChar("Please choose a seat: ", "ABCD");
+     
+        seatChoice = toupper(seatChoice);
+
+        cout << "\n";
+
+        for (index1 = 0; index1 < 7; index1++)
+        {
+            if (rowChoice == arr[index1][0])
+            {
+                for (index2 = 1; index2 < 5; index2++)
+                {
+                    if (arr[index1][index2] == 'X')
+                    {
+                        cout << "\nUnfortunatley the seat is taken.\n";
+                        break;
+                    }
+                    else if (seatChoice == arr[index1][index2])
+                        arr[index1][index2] = 'X';
+                }
+            }
+        }
+
+        for (index1 = 0; index1 < 7; index1++)
+        {
+            for (index2 = 0; index2 < 5; index2++)
+            {
+                cout << arr[index1][index2] << " ";
+            }
+            cout << "\n";
+        }
+
+        char repeat = inputChar("\nWould you like to choose a different seat(Y - yes or N - no)? ", 'Y', 'N');
+        if (toupper(repeat) == 'N')
+            break;
+        cout << "\n";
+    } while (true);
+}
+
+void sort(string phrase)
+{
+    int n = phrase.size();
+
+    int freq[SIZE];
+
+    memset(freq, 0, sizeof(freq));
+    
+    for (int i = 0; i < n; i++)
+    {
+         freq[phrase[i] - 'a']++;
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        if (phrase[i] == '.')
+            break;
+        if (freq[phrase[i] - 'a'] != 0)
+           {
+               cout << "\t" << phrase[i] << "\t\t\t" << freq[phrase[i] - 'a'] << "\n";
+               freq[phrase[i] - 'a'] = 0;
+           }
+    }
+}
+
+void spaceRemoval(string str)
+{
+    int i = 0, j = 0;
+    while (str[i])
+    {
+        if (str[i] != ' ')
+            str[j++] = str[i];
+        i++;
+    }
+    str[j] = '\0';
+    sort(str);
+}
+
+void Programming_Project8()
+{
+
+    cout << "Programming Project 8\n";
+
+    cout << "\nType a sentence and it with a period: ";
+    string phrase;
+    getline(cin, phrase);
+
+    transform(phrase.begin(), phrase.end(), phrase.begin(), ::tolower);
+    
+    cout << "\n";
+
+    cout << "\tLetter\t\tNumber of Occurences\n";
+    spaceRemoval(phrase);
+}
+
+void insertionSort(int a[], int n)
+{
+
+    int i, value, index;
+    for (i = 1; i < n; i++)
+    {
+        value = a[i];
+        index = i;
+
+        while (index > 0 && a[index - 1] > value)
+        {
+            a[index] = a[index - 1];
+            index = index - 1;
+        }
+        a[index] = value;
+    }
+
+}
+
+void outputPartialArray(const int list[], int size)
+{
+    // list[0] = 13; error cant change
+    for (int i = 0; i < size; i++)
+    {
+        cout << "\t" << list[i] << " ";
+    }
+}
+
+void Programming_Project6()
+{
+
+    cout << "Programming Project 6\n";
+
+    int list[10] = { 0 };
+
+    for (int i = 0; i < 10; i++)
+        list[i] = rand() % 100 + 1;
+
+    cout << "\nThe array values: \n";
+    for (int i = 0; i < 10; i++)
+        cout << "\t" << list[i] << " ";
+    cout << "\n";
+
+    insertionSort(list, 10);
+    cout << "\nSorted array (insertion sort): \n";
+    outputPartialArray(list, 10);
+
+    cout << "\n";
+}
+
+void Programming_Project5()
+{
+    cout << "Programming Project 5\n";
+
+    int list[35] = { 0 };
+    //int count[35] = { 0 };
+    int count = 1,j,index;
+
+    int i = 0, temp = 0;
+
+    int size = inputInteger("\nEnter the partially size of the array (1..35): ", 1, 35);
+
+    cout << "\n";
+
+    for (int i = 0; i < size; i++)
+        list[i] = rand() % 100 + 1;
+
+    cout << "The array values: ";
+    for (int i = 0; i < size; i++)
+        cout << list[i] << " ";
+    cout << "\n";
+
+    for (i = 0; i < size; i++)
+    {
+        for (j = i + 1; j < size; j++)
+        {
+            if (list[i] > list[j])
+            {
+                list[i] = list[i] + list[j];
+                list[j] = list[i] - list[j];
+                list[i] = list[i] - list[j];
+            }
+        }
+    }
+    for (i = 0; i < size;)
+    {
+        for (j = i + 1; j < size; j++)
+        {
+            if (list[i] == list[j])
+            {
+                count++;
+            }
+        }
+        index = i;
+        i = i + count;
+        printf("\n%d repeated %d times\t", list[index], count);
+        count = 1;
+    }
+    
+}
+
+void inputPartialArray(double list[], int size)
+{
+    for (int i = 0; i < size; i++)
+        list[i] = rand() % 100 + 1;
+}
+
+void standardDeviation(const double list[], int size)
+{
+    double sum = 0.0, mean, variance = 0.0, stdDeviation;
+
+    for (int r = 0; r < size; r++)
+    {
+        sum += list[r];
+        mean = sum / size;
+    }
+    for (int r = 0; r < size; r++)
+    {
+        variance += pow(list[r] - mean, 2);
+        variance = variance / size;
+        stdDeviation = sqrt(variance);
+    }
+    cout << "The array values: \n";
+    for (int r = 0; r < size; r++)
+        cout << list[r] << " ";
+    cout << "\n";
+    cout << "\nThe standard deviation is " << stdDeviation << "\n";
+}
+
+void Programming_Project4()
+{
+    cout << "Programming Project 4\n";
+
+    double list[MAX_SIZE] = { 0 };
+
+    int size = inputInteger("\nEnter the partially size of the array (1..100): ", 1, 100);
+
+    cout << "\n";
+
+    inputPartialArray(list, size);
+    standardDeviation(list, size);
+}
